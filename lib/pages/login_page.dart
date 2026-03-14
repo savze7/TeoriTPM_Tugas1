@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    if (username == '123' && password == '123') {
+    if (username == 'AdminWOk' && password == 'KamiCintaMBG123') {
       setState(() {
         _isLoginFailed = false;
       });
