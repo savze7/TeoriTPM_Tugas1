@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key}); // Tambahkan const key biar rapi
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -58,15 +58,15 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // Background abu-abu muda seperti di home
+      backgroundColor: const Color(0xFFF8FAFC), 
       
-      body: Center( // Dibungkus Center agar selalu di tengah layar
+      body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
             decoration: BoxDecoration(
-              color: Colors.white, // Kotak putih untuk form
+              color: Colors.white, 
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min, // Agar kotak menyesuaikan isi
+              mainAxisSize: MainAxisSize.min, 
               children: [
                 const Text(
                   "Login",
@@ -98,7 +98,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
                 
-                // --- KOTAKAN USERNAME ---
                 TextField(
                   controller: _usernameController,
                   decoration: InputDecoration(
@@ -106,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     labelStyle: TextStyle(color: _isLoginFailed ? Colors.red : Colors.grey[700]),
                     prefixIcon: Icon(Icons.person, color: _isLoginFailed ? Colors.red : const Color(0xFF2563EB)),
                     filled: true,
-                    fillColor: Colors.grey[50], // Sedikit warna agar terlihat seperti field modern
+                    fillColor: Colors.grey[50], 
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(color: _isLoginFailed ? Colors.red : Colors.grey.shade300),
@@ -123,7 +122,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 16),
                 
-                // --- KOTAKAN PASSWORD ---
                 TextField(
                   controller: _passwordController,
                   obscureText: !_isPasswordVisible,
@@ -160,15 +158,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
                 
-                // --- TOMBOL LOGIN ---
                 ElevatedButton(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2563EB), // Warna tombol biru
-                    foregroundColor: Colors.white, // Warna teks putih
+                    backgroundColor: const Color(0xFF2563EB), 
+                    foregroundColor: Colors.white, 
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // Mengikuti lengkungan field
+                      borderRadius: BorderRadius.circular(12), 
                     ),
                     elevation: 2,
                   ),

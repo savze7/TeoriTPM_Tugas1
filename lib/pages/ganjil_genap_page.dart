@@ -38,14 +38,12 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
     setState(() {
       _sudahDihitung = true;
 
-      // Logika Ganjil Genap
       if (angka % 2 == 0) {
         _hasilGanjilGenap = "GENAP";
       } else {
         _hasilGanjilGenap = "GANJIL";
       }
 
-      // Logika Bilangan Prima
       bool isPrima = true;
       if (angka <= 1) {
         isPrima = false;
@@ -69,10 +67,10 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // Warna background senada
+      backgroundColor: const Color(0xFFF8FAFC), 
       appBar: AppBar(
         title: const Text('Ganjil Genap & Prima', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF2563EB), // Warna biru utama
+        backgroundColor: const Color(0xFF2563EB), 
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -82,11 +80,11 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
           decoration: BoxDecoration(
-            color: Colors.white, // Dibungkus kotak putih
+            color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF1E293B).withOpacity(0.06),
+                color: const Color(0xFF1E293B).withValues(alpha: 0.06),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               )
@@ -95,13 +93,12 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // --- BOX HASIL ---
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9), // Warna abu-abu yang lebih lembut dari sebelumnya
+                  color: const Color(0xFFF1F5F9),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE2E8F0)), // Border lebih tipis dan terang
+                  border: Border.all(color: const Color(0xFFE2E8F0)), 
                 ),
                 child: Column(
                   children: [
@@ -124,7 +121,7 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
                             ),
                           ],
                         ),
-                        Container(height: 40, width: 1, color: Colors.grey.shade300), // Garis pemisah kecil di tengah
+                        Container(height: 40, width: 1, color: Colors.grey.shade300),
                         Column(
                           children: [
                             const Text('Status', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -146,7 +143,6 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
               ),
               const SizedBox(height: 40),
               
-              // --- FORM INPUT ANGKA ---
               TextField(
                 controller: _angkaController,
                 keyboardType: TextInputType.number,
@@ -172,11 +168,10 @@ class _GanjilGenapPageState extends State<GanjilGenapPage> {
               ),
               const SizedBox(height: 32),
               
-              // --- TOMBOL CEK ---
               ElevatedButton(
                 onPressed: _cekAngka,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2563EB), // Warna biru utama
+                  backgroundColor: const Color(0xFF2563EB),
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TambahKurangPage extends StatefulWidget {
   const TambahKurangPage({super.key});
@@ -10,22 +11,39 @@ class TambahKurangPage extends StatefulWidget {
 class _TambahKurangPageState extends State<TambahKurangPage> {
   final TextEditingController _angka1Controller = TextEditingController();
   final TextEditingController _angka2Controller = TextEditingController();
+
   String _hasil = "0";
 
   void _hitung(String operasi) {
-    // Validasi kalo inputannye kosong
+
     if (_angka1Controller.text.isEmpty || _angka2Controller.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Isi dulu angkanya, tidak boleh kosong!'),
+          content: Text("Isi dulu kedua angka!"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+    final regex = RegExp(r'^-?\d+(\.\d+)?$');
+
+    if (!regex.hasMatch(_angka1Controller.text) ||
+        !regex.hasMatch(_angka2Controller.text)) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Input harus bilangan bulat atau desimal (boleh minus).",
+          ),
           backgroundColor: Colors.red,
         ),
       );
       return;
     }
 
-    double angka1 = double.tryParse(_angka1Controller.text) ?? 0;
-    double angka2 = double.tryParse(_angka2Controller.text) ?? 0;
+    double angka1 = double.parse(_angka1Controller.text);
+    double angka2 = double.parse(_angka2Controller.text);
+
     double hasil;
 
     if (operasi == '+') {
@@ -35,149 +53,151 @@ class _TambahKurangPageState extends State<TambahKurangPage> {
     }
 
     setState(() {
-      // Biar kalo hasilnye gaada koma (misal 5.0), ditampilinnye 5 aje biar cakep
+      hasil = double.parse(hasil.toStringAsFixed(10));
+
       if (hasil == hasil.toInt()) {
         _hasil = hasil.toInt().toString();
       } else {
         _hasil = hasil.toString();
       }
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // Warna background senada
+      backgroundColor: const Color(0xFFF8FAFC),
+
       appBar: AppBar(
-        title: const Text('Kalkulator Tambah Kurang', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-        backgroundColor: const Color(0xFF2563EB), // Warna biru utama
+        title: const Text(
+          'Kalkulator Tambah Kurang',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color(0xFF2563EB),
         foregroundColor: Colors.white,
-        elevation: 0,
         centerTitle: true,
       ),
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24),
+
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+
           decoration: BoxDecoration(
-            color: Colors.white, // Dibungkus kotak putih
+            color: Colors.white,
             borderRadius: BorderRadius.circular(16),
+
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF1E293B).withOpacity(0.06),
+                color: const Color(0xFF1E293B).withValues(alpha: 0.06),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               )
-            ]
+            ],
           ),
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: [
-              // --- BOX HASIL ---
+
               Container(
                 padding: const EdgeInsets.all(24),
+
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9), // Warna abu-abu yang lebih lembut
+                  color: const Color(0xFFF1F5F9),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE2E8F0)), // Border lebih tipis
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
                 ),
+
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end, // Teks rata kanan seperti kalkulator
+                  crossAxisAlignment: CrossAxisAlignment.end,
+
                   children: [
-                    Text('Hasil Akhir', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey[600])),
+                    Text(
+                      'Hasil Akhir',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+
                     const SizedBox(height: 8),
+
                     Text(
                       _hasil,
                       style: const TextStyle(
-                        fontSize: 48, 
-                        fontWeight: FontWeight.bold, 
-                        color: Color(0xFF2563EB), // Menggunakan warna biru utama untuk hasil
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2563EB),
                       ),
                     ),
                   ],
                 ),
               ),
+
               const SizedBox(height: 40),
-              
-              // --- FORM INPUT ANGKA 1 ---
+
               TextField(
                 controller: _angka1Controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Angka Pertama',
-                  labelStyle: TextStyle(color: Colors.grey[600]),
-                  prefixIcon: const Icon(Icons.looks_one, color: Color(0xFF2563EB)),
-                  filled: true,
-                  fillColor: Colors.grey[50],
+                  prefixIcon: const Icon(Icons.looks_one),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF2563EB), width: 2),
                   ),
                 ),
               ),
+
               const SizedBox(height: 16),
-              
-              // --- FORM INPUT ANGKA 2 ---
+
               TextField(
                 controller: _angka2Controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Angka Kedua',
-                  labelStyle: TextStyle(color: Colors.grey[600]),
-                  prefixIcon: const Icon(Icons.looks_two, color: Color(0xFF2563EB)),
-                  filled: true,
-                  fillColor: Colors.grey[50],
+                  prefixIcon: const Icon(Icons.looks_two),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF2563EB), width: 2),
                   ),
                 ),
               ),
+
               const SizedBox(height: 40),
-              
-              // --- TOMBOL OPERASI (+ DAN -) ---
+
               Row(
                 children: [
+
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () => _hitung('+'),
+
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2563EB), // Biru utama
+                        backgroundColor: const Color(0xFF2563EB),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        elevation: 2,
                       ),
+
                       child: const Icon(Icons.add, size: 28),
                     ),
                   ),
-                  const SizedBox(width: 16), // Jarak antar tombol
+
+                  const SizedBox(width: 16),
+
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () => _hitung('-'),
+
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.shade600, // Merah untuk kurang
+                        backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        elevation: 2,
                       ),
+
                       child: const Icon(Icons.remove, size: 28),
                     ),
                   ),

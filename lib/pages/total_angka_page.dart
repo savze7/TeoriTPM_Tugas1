@@ -18,8 +18,20 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
     if (input.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Isi dulu field-nya ya, tidak ada yang bisa dihitung nih!'), 
-          backgroundColor: Colors.red
+          content: Text('Isi dulu field-nya ya, tidak ada yang bisa dihitung nih!'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    final regex = RegExp(r'^\d+$');
+
+    if (!regex.hasMatch(input)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Input hanya boleh berisi angka 0-9 tanpa simbol atau huruf.'),
+          backgroundColor: Colors.red,
         ),
       );
       return;
@@ -28,14 +40,12 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
     int totalJumlah = 0;
     int jumlahKarakter = 0;
 
-    // Looping sesimple mungkin biar gampang dijelasin ntar pas presentasi
     for (int i = 0; i < input.length; i++) {
-      // Cek satu-satu karakternye, bisa dijadiin angka apa kaga
       int? angka = int.tryParse(input[i]);
-      
+
       if (angka != null) {
-        totalJumlah += angka; // Tambahin angkanye ke total
-        jumlahKarakter++;     // Itung ada berapa digit angkanye
+        totalJumlah += angka;
+        jumlahKarakter++;
       }
     }
 
@@ -48,10 +58,10 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // Warna background senada
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: const Text('Total Angka', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF2563EB), // Warna biru utama
+        backgroundColor: const Color(0xFF2563EB), 
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
@@ -61,11 +71,11 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
           decoration: BoxDecoration(
-            color: Colors.white, // Dibungkus kotak putih
+            color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF1E293B).withOpacity(0.06),
+                color: const Color(0xFF1E293B).withValues(alpha: 0.06),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               )
@@ -74,13 +84,13 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // --- BOX HASIL ---
+
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9), // Warna abu-abu yang lebih lembut
+                  color: const Color(0xFFF1F5F9), 
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE2E8F0)), // Border lebih tipis
+                  border: Border.all(color: const Color(0xFFE2E8F0)), 
                 ),
                 child: Column(
                   children: [
@@ -98,12 +108,12 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
                               style: const TextStyle(
                                 fontSize: 20, 
                                 fontWeight: FontWeight.bold, 
-                                color: Color(0xFF2563EB), // Biru utama
+                                color: Color(0xFF2563EB), 
                               ),
                             ),
                           ],
                         ),
-                        Container(height: 40, width: 1, color: Colors.grey.shade300), // Garis pemisah vertikal
+                        Container(height: 40, width: 1, color: Colors.grey.shade300), 
                         Column(
                           children: [
                             const Text('Total Jumlah', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -113,7 +123,7 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
                               style: const TextStyle(
                                 fontSize: 20, 
                                 fontWeight: FontWeight.bold, 
-                                color: Color(0xFF2563EB), // Biru utama
+                                color: Color(0xFF2563EB), 
                               ),
                             ),
                           ],
@@ -125,7 +135,6 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
               ),
               const SizedBox(height: 40),
               
-              // --- FORM INPUT ANGKA ---
               TextField(
                 controller: _angkaController,
                 keyboardType: TextInputType.number,
@@ -151,11 +160,10 @@ class _TotalAngkaPageState extends State<TotalAngkaPage> {
               ),
               const SizedBox(height: 32),
               
-              // --- TOMBOL HITUNG ---
               ElevatedButton(
                 onPressed: _hitungTotal,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2563EB), // Warna biru utama
+                  backgroundColor: const Color(0xFF2563EB),
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

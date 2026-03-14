@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ui'; // Penting untuk FontFeature
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class StopwatchPage extends StatefulWidget {
@@ -20,7 +20,6 @@ class _StopwatchPageState extends State<StopwatchPage> {
   }
 
   void _startTimer() {
-    // Panggil setState tiap 30 milidetik biar angka milidetiknye muter terus
     _timer = Timer.periodic(const Duration(milliseconds: 30), (Timer t) {
       if (mounted) {
         setState(() {});
@@ -44,18 +43,19 @@ class _StopwatchPageState extends State<StopwatchPage> {
   }
 
   String _formatTime() {
-    var milli = _stopwatch.elapsedMilliseconds;
-    // Potong milidetik jadi 2 digit aje biar kaga kepanjangan
+    int _AddMilliseconds = 0;
+    var milli = _stopwatch.elapsedMilliseconds + _AddMilliseconds;
     String milliseconds = (milli % 1000).toString().padLeft(3, "0").substring(0, 2);
     String seconds = ((milli ~/ 1000) % 60).toString().padLeft(2, "0");
-    String minutes = ((milli ~/ 1000) ~/ 60).toString().padLeft(2, "0");
+    String minutes = ((milli ~/ 60000) % 60).toString().padLeft(2, "0");
+    int hours = milli ~/ 3600000;
+    
 
-    return "$minutes:$seconds:$milliseconds";
+    return "$hours:$minutes:$seconds.$milliseconds";
   }
 
   @override
   void dispose() {
-    // Matiin timer kalo halamannya diclose biar memory lu kaga bocor
     if (_stopwatch.isRunning) {
       _timer.cancel();
     }
@@ -65,26 +65,25 @@ class _StopwatchPageState extends State<StopwatchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // Warna background senada
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: const Text('Stopwatch', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFF2563EB), // Warna biru utama
+        backgroundColor: const Color(0xFF2563EB), 
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
       ),
       body: Center(
-        child: SingleChildScrollView( // Ditambah SingleChildScrollView biar gak error kalau layarnya kecil
+        child: SingleChildScrollView( 
           padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // --- LAYAR TIMER ---
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
                 decoration: BoxDecoration(
-                  color: Colors.white, // Dibungkus kotak putih
+                  color: Colors.white, 
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
@@ -93,7 +92,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
                       offset: const Offset(0, 8),
                     )
                   ],
-                  border: Border.all(color: const Color(0xFFE2E8F0)), // Border tipis
+                  border: Border.all(color: const Color(0xFFE2E8F0)), 
                 ),
                 child: Column(
                   children: [
@@ -104,8 +103,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
                       style: const TextStyle(
                         fontSize: 64, 
                         fontWeight: FontWeight.bold, 
-                        color: Color(0xFF2563EB), // Biru Utama
-                        fontFeatures: [FontFeature.tabularFigures()], // Biar angkanya kaga goyang-goyang pas jalan
+                        color: Color(0xFF2563EB), 
+                        fontFeatures: [FontFeature.tabularFigures()],
                       ),
                     ),
                   ],
@@ -113,25 +112,19 @@ class _StopwatchPageState extends State<StopwatchPage> {
               ),
               const SizedBox(height: 60),
               
-              // --- TOMBOL-TOMBOL KONTROL ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Tombol Play
                   _buildControlButton(
                     onPressed: _stopwatch.isRunning ? null : _startTimer,
                     icon: Icons.play_arrow,
                     color: Colors.green.shade600,
                   ),
-                  
-                  // Tombol Pause
                   _buildControlButton(
                     onPressed: _stopwatch.isRunning ? _stopTimer : null,
                     icon: Icons.pause,
                     color: Colors.orange.shade600,
                   ),
-                  
-                  // Tombol Stop/Reset
                   _buildControlButton(
                     onPressed: _resetTimer,
                     icon: Icons.stop,
@@ -146,16 +139,15 @@ class _StopwatchPageState extends State<StopwatchPage> {
     );
   }
 
-  // Widget khusus untuk membuat tombol bulat agar kodenya lebih rapi
   Widget _buildControlButton({required VoidCallback? onPressed, required IconData icon, required Color color}) {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         boxShadow: onPressed == null 
-          ? [] // Gak ada bayangan kalau tombolnya mati (disabled)
+          ? [] 
           : [
               BoxShadow(
-                color: color.withOpacity(0.4),
+                color: color.withValues(alpha: 0.4),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               )
@@ -164,13 +156,13 @@ class _StopwatchPageState extends State<StopwatchPage> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(20), // Ukuran tombol diperbesar sedikit
+          padding: const EdgeInsets.all(20),
           backgroundColor: color,
           foregroundColor: Colors.white,
           disabledBackgroundColor: Colors.grey.shade300,
           disabledForegroundColor: Colors.grey.shade500,
           shape: const CircleBorder(),
-          elevation: 0, // Elevation dari button dimatikan, diganti pakai boxShadow dari Container di atas
+          elevation: 0,
         ),
         child: Icon(icon, size: 36),
       ),
