@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  "Tugas 1 Teori TPM",
+                  "Welcome To MBG Application",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,

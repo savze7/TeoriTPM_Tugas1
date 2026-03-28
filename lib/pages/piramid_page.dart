@@ -32,7 +32,7 @@ class _PiramidPageState extends State<PiramidPage> {
         !regex.hasMatch(_tinggiController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Input harus angka!'),
+          content: Text('Input harus angka dan tidak bisa Minus!'),
           backgroundColor: Colors.red,
         ),
       );
@@ -113,12 +113,18 @@ class _PiramidPageState extends State<PiramidPage> {
                               style: TextStyle(color: Colors.grey),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              _hasilLuas,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF2563EB),
+                            SizedBox(
+                              width: 120,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  _hasilLuas,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF2563EB),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -135,12 +141,18 @@ class _PiramidPageState extends State<PiramidPage> {
                               style: TextStyle(color: Colors.grey),
                             ),
                             const SizedBox(height: 4),
-                            Text(
-                              _hasilVolume,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF2563EB),
+                            SizedBox(
+                              width: 120,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  _hasilVolume,
+                                  style: const TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF2563EB),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
