@@ -5,6 +5,8 @@ import 'piramid_page.dart';
 import 'stopwatch.dart';
 import 'total_angka_page.dart';
 import 'login_page.dart';
+import 'weton_hijriah_page.dart';
+import 'umur_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,22 +29,28 @@ class _HomePageState extends State<HomePage> {
 
       switch (index) {
         case 1:
-          page = GanjilGenapPage();
+          page = const GanjilGenapPage();
           break;
         case 2:
-          page = TambahKurangPage();
+          page = const TambahKurangPage();
           break;
         case 3:
-          page = PiramidPage();
+          page = const PiramidPage();
           break;
         case 4:
-          page = TotalAngkaPage();
+          page = const TotalAngkaPage();
           break;
         case 5:
-          page = StopwatchPage();
+          page = const StopwatchPage();
+          break;
+        case 6:
+          page = const WetonHijriahPage();
+          break;
+        case 7:
+          page = const UmurPage();
           break;
         default:
-          page = GanjilGenapPage();
+          page = const GanjilGenapPage();
       }
 
       Navigator.push(
@@ -71,7 +79,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
                 (Route<dynamic> route) => false,
               );
             },
@@ -173,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => GanjilGenapPage()),
+                      MaterialPageRoute(builder: (context) => const GanjilGenapPage()),
                     );
                   },
                 ),
@@ -185,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TambahKurangPage()),
+                      MaterialPageRoute(builder: (context) => const TambahKurangPage()),
                     );
                   },
                 ),
@@ -197,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PiramidPage()),
+                      MaterialPageRoute(builder: (context) => const PiramidPage()),
                     );
                   },
                 ),
@@ -209,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TotalAngkaPage()),
+                      MaterialPageRoute(builder: (context) => const TotalAngkaPage()),
                     );
                   },
                 ),
@@ -221,7 +229,31 @@ class _HomePageState extends State<HomePage> {
                   () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => StopwatchPage()),
+                      MaterialPageRoute(builder: (context) => const StopwatchPage()),
+                    );
+                  },
+                ),
+
+                _buildMenuCard(
+                  context,
+                  'Menu 6',
+                  'Cek Weton & Hijriah',
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const WetonHijriahPage()),
+                    );
+                  },
+                ),
+
+                _buildMenuCard(
+                  context,
+                  'Menu 7',
+                  'Kalkulator Usia',
+                  () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const UmurPage()),
                     );
                   },
                 ),
@@ -237,6 +269,10 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xFF2563EB),
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: false,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
         onTap: _onItemTapped,
         items: const [
 
@@ -268,6 +304,16 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.timer),
             label: "Stopwatch",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month),
+            label: "Weton",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_search),
+            label: "Usia",
           ),
 
         ],
@@ -316,7 +362,7 @@ class _HomePageState extends State<HomePage> {
               title,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF2563EB),
               ),

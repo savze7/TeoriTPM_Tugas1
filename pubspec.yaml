@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^8.0.2
+  hijri: ^3.0.0      # Buat konversi Masehi ke Hijriah
+  intl: ^0.19.0      # Buat formatting tanggal Masehi
 
 dev_dependencies:
   flutter_test:
